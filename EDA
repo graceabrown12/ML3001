@@ -2,6 +2,8 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
+##Q1
+
 df = pd.read_csv('./data/college_completion.csv',low_memory=False)
 
 import pandas as pd
@@ -40,4 +42,65 @@ sns.kdeplot(data=df,x='aid_arcsinh')
 
 sns.kdeplot(data=df,x='aid_value')
 
+sns.kdeplot(data=df,x='aid_value',hue='control')
+sns.kdeplot(data=df,x='aid_value',hue='level')
+df.loc[:,['control','aid_value']].groupby('control').describe()
+df.loc[:,['level','aid_value']].groupby('level').describe()
 
+sns.scatterplot(data=df,x='aid_value',y='grad_100_value')
+sns.scatterplot(data=df,x='aid_value',y='grad_100_value',hue='control')
+sns.scatterplot(data=df,x='aid_value',y='grad_100_value',hue='level')
+sns.scatterplot(data=df,x='aid_value',y='grad_100_value',hue='levelXcontrol')
+
+
+##Q4
+
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+df = pd.read_csv('../data/PendingInitialLandTsNonPhysicians.csv')
+
+print("Initial Dataset Overview:")
+print(df.info())
+print(df.head())
+
+
+df['FIRST_NAME'].fillna('Unknown', inplace=True)
+
+plt.figure(figsize=(10, 5))
+sns.boxplot(x=df['NPI'])
+plt.title('Boxplot of NPI')
+plt.show()
+
+plt.figure(figsize=(10, 5))
+df['LAST_NAME'].value_counts().nlargest(10).plot(kind='bar')
+plt.title('Top 10 Most Common Last Names')
+plt.ylabel('Count')
+plt.xlabel('Last Name')
+plt.show()
+
+plt.figure(figsize=(10, 5))
+df['FIRST_NAME'].value_counts().nlargest(10).plot(kind='bar')
+plt.title('Top 10 Most Common First Names')
+plt.ylabel('Count')
+plt.xlabel('First Name')
+plt.show()
+
+plt.figure(figsize=(10, 5))
+sns.histplot(df['NPI'], kde=False)
+plt.title('Histogram of NPI')
+plt.xlabel('NPI')
+plt.ylabel('Frequency')
+plt.show()
+
+plt.figure(figsize=(10, 5))
+sns.scatterplot(x=df.index, y='NPI', data=df)
+plt.title('Scatter Plot of NPI vs Index')
+plt.xlabel('Index')
+plt.ylabel('NPI')
+plt.show()
+
+summary = df['NPI'].describe()
+print("\nFive-Number Summary of NPI:")
+print(summary)
