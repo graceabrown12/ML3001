@@ -1,0 +1,43 @@
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.read_csv('./data/college_completion.csv',low_memory=False)
+
+import pandas as pd
+df = pd.read_csv('./data/college_completion.csv')
+
+print( df.shape, '\n') # 3798 observations, 63 variables
+print( df.head(), '\n') # Notice how the '...' column that hides a lot of variables
+
+print(pd.crosstab(df['control'],df['level']),'\n')
+print(pd.crosstab(df['control'],df['level'], normalize = 'all'),'\n')
+
+import seaborn as sns
+sns.histplot(df['grad_100_value'])
+
+sns.kdeplot(df['grad_100_value'])
+
+sns.boxplot(df['grad_100_value'])
+
+df['grad_100_value'].describe()
+
+sns.kdeplot(data=df,x='grad_100_value',hue='control')
+
+sns.kdeplot(data=df,x='grad_100_value',hue='level')
+
+df.loc[:,['control','grad_100_value']].groupby('control').describe()
+
+df.loc[:,['level','grad_100_value']].groupby('level').describe()
+
+df['levelXcontrol']=df['level']+', '+df['control']
+sns.kdeplot(data=df,x='grad_100_value',hue='levelXcontrol')
+
+df.loc[:,['level','control','grad_100_value']].groupby(['level','control']).describe()
+
+df['aid_arcsinh'] = np.arcsinh(df['aid_value'])
+sns.kdeplot(data=df,x='aid_arcsinh')
+
+sns.kdeplot(data=df,x='aid_value')
+
+
